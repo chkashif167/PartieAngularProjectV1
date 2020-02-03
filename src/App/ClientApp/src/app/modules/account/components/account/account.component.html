@@ -1,0 +1,50 @@
+<div class="page page-account">
+  <partie-header [title]="'Account'"
+                 [showNotification]="'true'">
+  </partie-header>
+ 
+  <partie-partner-progress *ngIf="roles?.includes('StandardUser'); else earningTracker" class="progress"></partie-partner-progress>
+  <ng-template #earningTracker>
+    <partie-earning-tracker [userId]="userId" class="earning"></partie-earning-tracker>
+  </ng-template>
+
+  <main class="content" [ngClass]="roles?.includes('StandardUser')? 'progress': 'earning'">
+    <div class="account-option referral-link">
+      <img src="/assets/images/icons/16px/link-blue-muted.svg" alt="Link Icon">
+      <span class="option-title">Referral Link</span>
+      <span #copyLink class="link">{{referralCode}}</span>
+      <button class="btn bg-black" (click)="copyText($event)">Copy</button>
+    </div>
+    <div class="account-option" (click)="navigateByUrl('/account/preferences')">
+      <img src="/assets/images/icons/16px/settings-blue-muted.svg" alt="Preferences Icon">
+      <span class="option-title">Preferences</span>
+    </div>
+    <div class="account-option" (click)="navigateByUrl('/notifications/manager')">
+      <img src="/assets/images/icons/16px/notifications-blue-muted.svg" alt="Notifications Icon">
+      <span class="option-title">Notifications Manager</span>
+    </div>
+    <div class="account-option" (click)="navigateByUrl('/account/privacy')">
+      <img src="/assets/images/icons/16px/lock-blue-muted.svg" alt="Privacy Icon">
+      <span class="option-title">Privacy &amp; Safety</span>
+    </div>
+    <div class="account-option" (click)="openTermsPopup()">
+      <img src="/assets/images/icons/16px/terms-blue-muted.svg" alt="Terms Icon">
+      <span class="option-title">Terms</span>
+    </div>
+    <div class="account-option" onclick="openModal('#terms-modal')">
+      <img src="/assets/images/icons/16px/community-blue-muted.svg" alt="Community Icon">
+      <span class="option-title">Community Guidelines</span>
+    </div>
+    <div class="account-option" onclick="openModal('#terms-modal')">
+      <img src="/assets/images/icons/16px/help-blue-muted.svg" alt="Help Icon">
+      <span class="option-title">Help</span>
+    </div>
+    <div class="account-option" onclick="openModal('#terms-modal')">
+      <img src="/assets/images/icons/16px/about-blue-muted.svg" alt="About Icon">
+      <span class="option-title">About</span>
+    </div>
+
+  </main>
+  <partie-termsandconditions [isActive]="termsIsActive" (TermsModalStatus)='closeTermsModal($event)'></partie-termsandconditions>
+  <partie-footer></partie-footer>
+</div>

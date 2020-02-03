@@ -1,0 +1,11 @@
+<div class="search-input search-settings">
+  <div class="content">
+    <img src="/assets/images/icons/16px/search.svg" alt="Search Icon">
+    <input  type="text"  [(ngModel)]="gameTitle" name="gameTitle" id="search" (keyup)="search()" placeholder="Search game titles" />
+    <a href="#" class="cancel">Cancel</a>
+    <button class="btn btn-bare btn-settings" (click)="search()">
+      <img src="/assets/images/icons/24px/settings.svg"
+           alt="Settings Icon">
+    </button>
+  </div>
+</div>

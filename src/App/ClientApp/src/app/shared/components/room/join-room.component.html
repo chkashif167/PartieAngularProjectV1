@@ -1,0 +1,49 @@
+<div class="modal join-modal dynamic-height active" id="join-modal">
+  <div class="modal-overlay"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="header-content">
+        <h2 class="modal-title">Join Partie</h2>
+        <!--<span class="h2">6 / 20</span>-->
+      </div>
+      <button class="btn bg-black btn-close" (click)="onBackButtonClick($event)">
+        <img src="/assets/images/icons/misc/close-x.svg" alt="Close Icon">
+      </button>
+    </div>
+    <div class="modal-content" (click)="onDialogClick($event)">
+      <div class="partie-item">
+        <span class="partie-title">{{model.roomDisplayName}}</span>
+        <p class="partie-description">{{model.roomDescription}}</p>
+        <div class="partie-meta">
+          <div class="partie-badges">
+            <!--<img src="/assets/images/icons/16px/xbox-blue-muted.svg" alt="Xbox Icon">-->
+            <div *ngFor="let tag of model.roomTags" class="tag bg-blue">{{tag}}</div>
+          </div>
+          <span class="partie-game">{{model.roomGameName}}</span>
+        </div>
+      </div>
+      <div class="person-listing partie-host">
+        <div class="avatar">
+          <img src="" [userId]="model.roomHostId" alt="Avatar Alt Text">
+          <div class="online-indicator"></div>
+        </div>
+        <div class="person-name">{{model.roomHostName}}</div>
+        <div class="person-info">
+          <div *ngIf="model.roomHost" class="tag bg-blue"><span>Host</span></div>
+          <span class="followers">{{model.roomHostFollowersCount}} Followers</span>
+        </div>
+        
+        <button *ngIf="isFollower==true" class="btn btn-fit bg-black">Following</button>
+        <button *ngIf="!isFollower==true" (click)="follow()" class="btn btn-fit btn-outline bg-black">Follow</button>
+       
+      </div>
+      <div class="loading-indicator">
+        <!--<img src="/assets/images/loader.png" srcset="/assets/images/loader@2x.png 2x, /assets/images/loader@3x.png 3x" alt="Loading Indicator" class="loader">
+        <p class="t-caption">Waiting for host...</p>-->
+      </div>         
+      <!--<button *ngIf="joiningRequestType === JoiningReuqestType.JoinRoom" class="btn bg-teal mv-24" onclick="showLoadingIndicator()">Send Request</button>-->
+      <button *ngIf="model.joiningRequestType === joiningType.SendRequestToRoom" class="btn bg-teal mv-24" (click)="joinRoomRequest()">Send Request</button>
+      <button *ngIf="model.joiningRequestType === joiningType.JoinRoom" class="btn bg-teal mv-24" (click)="joinRoom()">Join Room</button>      
+    </div>
+  </div>
+</div>

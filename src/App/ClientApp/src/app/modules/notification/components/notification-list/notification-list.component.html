@@ -1,0 +1,79 @@
+<div class="page page-notifications ">
+
+  <partie-header [title]="'Notifications'">
+    <a href="JavaScript:void(0);" class="btn btn-bare" (click)="close()"><img src="/assets/images/icons/24px/close.svg" alt="Close Icon"></a>
+  </partie-header>
+
+  <div class="clear">
+    <div class="content">
+      <span>Clear All Notifications?</span>
+      <button class="btn bg-purple">Clear All</button>
+    </div>
+  </div>
+  <main class="content">
+
+    <br/>
+
+    <ng-container *ngIf="notificationService.notifications$ | async as notifications">
+
+      <!--<div class="clear-notifications hide-mobile" *ngIf="notifications.length>0">
+        <span>Clear All Notifications?</span>
+        <button class="btn bg-purple" (click)="removeAll()">Clear All</button>
+      </div>-->
+
+      <div class="person-listing notification-item"
+           *ngFor="let alert of notifications; trackBy:trackByFn"
+           [ngSwitch]="alert.type">
+        <div class="avatar">
+          <img src="" [userId]="alert.fromUserId" alt="Avatar Alt Text">
+        </div>
+        <div class="person-name">
+          <span>{{alert.fromUserDisplayName}}</span>
+        </div>
+        <div class="person-info">
+          <span class="notification-message">{{alert.message}}</span>
+        </div>
+        <button class="btn btn-bare" (click)="remove(alert.id)" *ngSwitchDefault>
+          <img src="/assets/images/icons/32px/remove.svg" class="remove-icon" alt="Remove Icon">
+        </button>
+
+        <partie-follow-request-notification [followRequestById]="alert.fromUserId"
+                                            (onRead)="remove(alert.id)"
+                                            *ngSwitchCase="notificationType.FollowRequestSent">
+        </partie-follow-request-notification>
+
+        <partie-direct-message [fromUserId]="alert.fromUserId"
+                               (onRead)="remove(alert.id)"
+                               *ngSwitchCase="notificationType.DirectMessageReceived">
+
+        </partie-direct-message>
+
+        <partie-invitation-notification [url]="alert.additionalData.redirectToUrl"
+                                        (onRead)="remove(alert.id)"
+                                        *ngSwitchCase="notificationType.PartieInvitation">
+
+        </partie-invitation-notification>
+
+        <partie-view-detail-notification [url]="alert.additionalData.redirectToUrl"
+                                         [queryParams]="alert.additionalData.queryParams"
+                                         (onRead)="remove(alert.id)"
+                                         *ngSwitchCase="notificationType.RedirectToView">
+
+        </partie-view-detail-notification>
+
+
+
+      </div>
+
+      <ng-container *ngIf="notifications.length==0">
+        <div class="page page-notifications empty">
+          <partie-empty-notification></partie-empty-notification>
+        </div>
+      </ng-container>
+
+    </ng-container>
+
+
+
+  </main>
+</div>

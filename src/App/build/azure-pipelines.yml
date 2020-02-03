@@ -1,0 +1,36 @@
+# ASP.NET Core
+
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+- stg
+- int
+- dev
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  
+
+steps:
+- task: AzureKeyVault@1
+  inputs:
+    azureSubscription: 'PartieResourceGroupServicePrincipalConnection'
+    KeyVaultName: 'Partie-Vault'
+    SecretsFilter: '*'
+- task: UseNode@1
+- task: Bash@3
+  inputs:
+    filePath: 'src/App/build/build.sh'
+    arguments: '-dockerRegistry="$(dockerRegistry)" -dockerRegistryUsername="$(dockerRegistryUsername)" -dockerRegistryPassword="$(dockerRegistryPassword)" --settings_skipverification=true'
+    workingDirectory: 'src/App/build'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'artifacts'
+    ArtifactName: 'Artifact'
+    publishLocation: 'Container'

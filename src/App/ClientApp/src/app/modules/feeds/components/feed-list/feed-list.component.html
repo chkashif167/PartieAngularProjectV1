@@ -1,0 +1,44 @@
+<div class="page page-home show-search">
+  <partie-header [title]="'Home'" [showNotification]="'true'">
+
+    <div class="search-input search-settings">
+      <div class="content">
+        <img src="/assets/images/icons/16px/search.svg" alt="Search Icon">
+        <input [(ngModel)]="searchKeyword" type="text" name="searchKeyword" id="search" placeholder="Search feed" (keyup)="searchFeeds()" />
+        <a class="cancel">Cancel</a>
+      </div>
+    </div>
+
+  </partie-header>
+
+
+  <main *ngIf="currentUser" class="content" style="overflow-y: scroll; height: 750px; padding-top: 0; margin-top: 150px;"
+
+
+        infiniteScroll
+        [infiniteScrollUpDistance]="1.5"
+        [infiniteScrollDistance]="0.5"
+        [infiniteScrollThrottle]="50"
+
+        [scrollWindow]="false"
+
+        (scrolledUp)="onScrollUp($event)"
+        (scrolled)="onScrollDown($event)">
+
+    <ng-container *ngIf="feedService.userFeed$ | async as feeds">
+      <partie-feed-item *ngFor="let item of feeds; let i = index; trackBy: trackByFn"
+
+                        [userPostItem]="item"
+                        [currentUser]="currentUser"
+                        (onReportPost)="reportPost($event)">
+      </partie-feed-item>
+    </ng-container>
+
+  </main>
+
+
+  <a [routerLink]="['/feed/create']" class="btn btn-floating-cta"></a>
+  <partie-footer></partie-footer>
+
+</div>
+

@@ -1,0 +1,60 @@
+<div class="page modal host-modal dynamic-height active" id="partie-settings-modal">
+  <div class="modal-overlay"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h2 class="modal-title">{{model.gameTitle}}</h2>
+      <button class="btn bg-black btn-close" (click)="close()">
+        <img src="/assets/images/icons/misc/close-x.svg" alt="Close Icon">
+      </button>
+    </div>
+
+    <div class="modal-content">
+      <form name="room" #room="ngForm" class="form" (ngSubmit)="room.form.valid && submit()" novalidate>
+
+        <div class="form-control input-lg">
+          <label for="displayName"></label>
+          <input [(ngModel)]="model.displayName" #displayName="ngModel" type="text" name="displayName" placeholder="Enter Partie name (max 100 characters)" value="" required maxlength="100" />
+          <div *ngIf="(room.submitted && displayName.invalid) || (displayName.invalid && (displayName.dirty || displayName.touched))" class="validation-error">
+            <div *ngIf="displayName.errors.required">Display name is required.</div>
+          </div>
+        </div>
+        
+        <partie-room-tags *ngIf="model.gameId" [gameId]="model.gameId" [selectedTags]="roomTags" (selectedTagString)="updateSelectedTags($event)"></partie-room-tags>
+        <!--<div *ngIf="showTagsErrorMsg" class="validation-error" style="margin: 0 0 20px;">
+          Tags are required
+          </div>-->
+
+
+        <div class="form-control ">
+          <label for="description">Objective</label>
+          <input [(ngModel)]="model.description" type="text" #description="ngModel" name="description" placeholder="Enter your Partie's objective (max 150 characters)" value="" required maxlength="150" />
+          <div *ngIf="(room.submitted && description.invalid) || (description.invalid && (description.dirty || description.touched))" class="validation-error">
+            <div *ngIf="description.errors.required">description is required.</div>
+          </div>
+        </div>
+
+        <div class="setting-toggle pt-0" [ngClass]="model.private ? 'on' : ''">
+          <div class="toggle-main">
+            <div class="label-group">
+              <span class="setting-toggle-label">Privacy</span>
+            </div>
+            <div class="switch-group">
+              <span class="status-message on">Closed Partie</span>
+              <span class="status-message off">Open Partie</span>
+              <label class="switch icons-lg">
+                <input type="checkbox" [checked]="model.private" (change)="roomPrivacyChanged()">
+                <span class="slider round"></span>
+                <img src="/assets/images/icons/16px/lock-green.svg" alt="Locked Icon">
+                <img src="/assets/images/icons/16px/unlocked.svg" alt="Unlocked Icon">
+              </label>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+  <div class="modal-fixed-bottom">
+    <button class="btn btn-fill bg-blue" (click)="room.form.valid && submit()">Save</button>
+  </div>
+</div>

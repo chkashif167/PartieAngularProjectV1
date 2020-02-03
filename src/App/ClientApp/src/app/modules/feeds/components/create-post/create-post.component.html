@@ -1,0 +1,31 @@
+<div class="page page-home page-new-post">
+  <partie-header [backUrl]="'/feed'" [title]="'Create Post'" [showNotification]="'false'">
+    <a (click)="createUserPost()" class="btn btn-bare btn-disabled" id="post"><img src="/assets/images/icons/24px/post.svg" alt="Post Icon"></a>
+  </partie-header>
+
+  <main class="content">
+    <div class="new-post-header">
+      <img height="32px" width="32px" *ngIf="currentUser" src="" [userId]="currentUser.id" alt="Avatar Alt Text" />
+      <button (click)="togglePostType()" class="btn btn-outline muted" data-visibility="public">{{buttonName}}</button>
+     
+      <span [className]="postType === visibleToSelfAndFollowersOnly ? 'visibility' : 'visibility t-green'">{{postType}}</span>
+
+    </div>
+
+    <form>
+      <div class="form-control">
+        <textarea [(ngModel)]="model.description" name="post-content" id="post-content" class="new-post-input" placeholder="What's going on?"></textarea>
+      </div>
+
+      <input type="file" (change)="upload($event.target.files[0])" />
+      <div *ngIf="percentDone">
+        Upload Percent: {{percentDone}}%
+        <ng-container *ngIf="uploadSuccess">
+          <div class="t-green">
+            File uploaded successfully
+          </div>
+        </ng-container>
+      </div>
+    </form>
+  </main>
+</div>

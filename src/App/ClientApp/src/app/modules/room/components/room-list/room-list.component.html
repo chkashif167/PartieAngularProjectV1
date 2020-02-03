@@ -1,0 +1,16 @@
+<div class="page page-partie-list show-search">
+    <partie-header 
+       [title]="'Partie'"
+       [showNotification]="'true'">
+    <partie-search-room (search)="search($event)"></partie-search-room>
+    </partie-header>
+  
+    <main class="content">
+     
+      <partie-room-list-item *ngFor="let room of rooms" [room]="room">
+      </partie-room-list-item>
+
+    </main>
+  <a class="btn btn-floating-cta" (click)="addRoom()"></a>
+  <partie-footer></partie-footer>
+</div>

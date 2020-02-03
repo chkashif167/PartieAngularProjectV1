@@ -1,0 +1,19 @@
+.partner-progress {
+    position: relative;
+}
+.partner-progress.expanded {
+    min-height: 65px;
+    height: 330px;
+   
+}
+.partner-progress .progress-checklist {
+    height: 240px; 
+    overflow: auto;
+}
+.partner-progress .progress-collapse {
+top: 300px
+}
+
+.partner-progress .checklist-item {
+width: calc(100% - 10px);
+}

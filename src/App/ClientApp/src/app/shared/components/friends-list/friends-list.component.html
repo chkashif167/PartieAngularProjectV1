@@ -1,0 +1,42 @@
+
+<div class="modal active">
+  <div class="modal-overlay"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h2 class="modal-title">{{title}}</h2>
+      <button class="btn bg-black btn-close" (click)="close($event)">
+        <img src="/assets/images/icons/misc/close-x.svg" alt="Close Icon">
+      </button>
+    </div>
+    <div class="modal-content" (click)="onDialogClick($event)">
+      <div class="content-scrollable">
+
+        <div *ngFor="let friend of friends"
+             class="person-listing participant"
+             [ngSwitch]="childComponentName">
+
+          <div class="avatar">
+            <img src="" [userId]="friend.id" />
+            <div class="online-indicator"></div>
+          </div>
+          <div class="person-name"><span (click)="navigateToProfile(friend.id)" style="cursor: pointer">{{friend.displayName}}</span></div>
+          <div class="person-info">
+            <div *ngIf="friend.tag" class="tag" [ngClass]="friend.tag.toLowerCase() === 'staff' ? 'bg-teal' : 'bg-orange'"><span>{{friend.tag}}</span></div>
+            <span class="followers">{{friend.friendTypeCount}} {{friend.type}}</span>
+          </div>
+          <partie-message-friend [friend]="friend" *ngSwitchCase="componentType.DirectMessageFriendsComponent"></partie-message-friend>
+          <span *ngIf="isHost">
+            <partie-remove-room-user-button
+              *ngSwitchCase="componentType.RemoveRoomUserButtonComponent"
+
+              [friend]="friend"
+              (userBanned)="removeParticipant($event)">
+
+            </partie-remove-room-user-button>
+          </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

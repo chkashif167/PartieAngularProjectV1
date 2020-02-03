@@ -1,0 +1,73 @@
+<div class="page page-verify-account">
+  <header>
+    <div class="content">
+      <div class="actions--left">
+    </div>
+      <h1 class="h2 t-center">Email Verification</h1>
+      <div class="actions--right">
+      </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <p class="validation-error">{{notificationMsg}}</p>
+    <p>{{successMsg}}</p>
+
+    <ng-template [ngTemplateOutlet]="verifyEmail" *ngIf="!resendVerificationCode"></ng-template>
+    <ng-template [ngTemplateOutlet]="resendVerificationEmail" *ngIf="resendVerificationCode"></ng-template>
+
+
+    <p class="contact">Need help? <a href="#">Contact Us</a></p>
+  </main>
+</div>
+
+
+<ng-template #verifyEmail>
+  <form *ngIf="!emailVerified" name="verify" #verify="ngForm" class="form" (ngSubmit)="verify.form.valid && onSubmit()" novalidate>
+
+    <div class="form-control ">
+      <label for="code">Verify Your Email</label>
+      <a href="javascript:void(0)" (click)="resendVerificationCode=true" class="resend">Resend Verification Email</a>
+      <input type="text" [(ngModel)]="code" id="code" name="code" minlength="14" maxlength="14" #verificationCode="ngModel" placeholder="Enter the 14-character code" value="" required />
+      <div *ngIf="(verify.submitted && verificationCode.invalid) || (verificationCode.invalid && (verificationCode.dirty || verificationCode.touched))" class="validation-error">
+        <div *ngIf="verificationCode.errors.required">Verification code is required.</div>
+        <div *ngIf="verificationCode.errors.minlength">Verification code must be 14 characters long.</div>
+      </div>
+
+    </div>
+
+    <button type="submit" class="btn bg-blue">
+      Verify Email
+    </button>
+
+  </form>
+
+  <div *ngIf="emailVerified">
+    <p>Your email has been verified</p>
+  </div>
+</ng-template>
+
+<ng-template #resendVerificationEmail>
+  <form name="verify" #sendVerificationEmail="ngForm" class="form" (ngSubmit)="sendVerificationEmail.form.valid && onSendVerificationEmail()" novalidate>
+
+    <div class="form-control ">
+      <label for="email">Enter Your Email</label>
+
+      
+      <input type="text" [(ngModel)]="email" id="email" name="email" #emailAddress="ngModel"
+             pattern="{{emailPattern}}"
+             placeholder="Enter your email" value="" required />
+      <div *ngIf="(sendVerificationEmail.submitted && emailAddress.invalid) || (emailAddress.invalid && (emailAddress.dirty || emailAddress.touched))" class="validation-error">
+        <div *ngIf="emailAddress.errors.required">Email is required.</div>
+        <div *ngIf="emailAddress.errors?.pattern">Email must be a valid email address</div>
+      </div>
+
+    </div>
+
+    <button type="submit" class="btn bg-blue">
+      Resend Verification Email
+    </button>
+
+  </form>
+</ng-template>
+

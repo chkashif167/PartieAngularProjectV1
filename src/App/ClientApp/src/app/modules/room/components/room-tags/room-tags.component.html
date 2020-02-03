@@ -1,0 +1,3 @@
+<div class="tag-selection mb-24">
+  <div *ngFor="let tag of allTags;let i = index" [ngClass]="(tag.selected)?'tag tag-lg active':'tag tag-lg'" (click)="toggleTag(i)">{{tag.name}}</div>
+</div>

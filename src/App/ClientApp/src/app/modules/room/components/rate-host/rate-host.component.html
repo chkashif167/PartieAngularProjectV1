@@ -1,0 +1,46 @@
+<div class="modal rate-modal dynamic-height active" id="rate-partie-modal">
+  <div class="modal-overlay"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h2 class="modal-title"></h2>
+      <button class="btn bg-black btn-close" (click)="close()">
+        <img src="assets/images/icons/misc/close-x.svg" alt="Close Icon">
+      </button>
+    </div>
+    <div class="modal-content">
+      <h2>Thanks for Partie'ing!</h2>
+      <div class="section-header">
+        <span class="t-nav">Rate Partie</span>
+      </div>
+      <div class="star-rating">
+        <img [src]="star(0)" alt="Star Icon" class="star" (click)="updateRating(0)" (mouseover)="rate(0)" (mouseleave)="getActualRating()">
+        <img [src]="star(1)" alt="Star Icon" class="star" (click)="updateRating(1)" (mouseover)="rate(1)" (mouseleave)="getActualRating()">
+        <img [src]="star(2)" alt="Star Icon" class="star" (click)="updateRating(2)" (mouseover)="rate(2)" (mouseleave)="getActualRating()">
+        <img [src]="star(3)" alt="Star Icon" class="star" (click)="updateRating(3)" (mouseover)="rate(3)" (mouseleave)="getActualRating()">
+        <img [src]="star(4)" alt="Star Icon" class="star" (click)="updateRating(4)" (mouseover)="rate(4)" (mouseleave)="getActualRating()">
+      </div>
+      <div class="section-header">
+        <span class="t-nav">Offer Tokens</span>
+      </div>
+      <div class="offer-tokens">
+        <div class="token-container">
+
+          <div *ngFor="let badge of badges; trackBy: trackByFn"
+               [ngClass]="(badge.selected)?'token selected':'token'"
+               (click)="awardBadge(badge.id)"
+               title="{{badge.description}}">
+            <img src="{{badgeUrl}}" alt="Token">
+            <span class="token-label t-caption">{{badge.title}}</span>
+          </div>
+          
+        </div>
+      </div>
+      <div class="social-buttons">
+        <partie-social-media-buttons></partie-social-media-buttons></div>
+      <button class="btn bg-teal submit" (click)="submit()">Submit</button>
+      
+      <br/>
+      <br/>
+    </div>
+  </div>
+</div>

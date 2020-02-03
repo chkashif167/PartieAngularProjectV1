@@ -1,0 +1,146 @@
+<div class="modal host-modal dynamic-height active page">
+  <div class="modal-overlay"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h2 class="modal-title">{{model.gameTitle}}</h2>
+      <button class="btn bg-black btn-close" (click)="onCreateRoomDialogClose($event)">
+        <img src="/assets/images/icons/misc/close-x.svg" alt="Close Icon">
+      </button>
+    </div>
+    <div class="modal-content" (click)="onDialogClick($event)">
+      <form name="room" #room="ngForm" class="form" (ngSubmit)="room.form.valid && onSubmit()" novalidate>
+        <div class="form-control input-lg">
+          <label for="displayName"></label>
+          <input [(ngModel)]="createRoomRequest.displayName" #displayName="ngModel" type="text" name="displayName" placeholder="Enter Partie name (max 100 characters)" value="" required maxlength="100" />
+          <div *ngIf="(room.submitted && displayName.invalid) || (displayName.invalid && (displayName.dirty || displayName.touched))" class="validation-error">
+            <div *ngIf="displayName.errors.required">Display name is required.</div>
+          </div>
+        </div>
+
+        <partie-room-tags [allTags]="gameTags" [selectedTags]="" (selectedTagString)="updateSelectedTags($event)"></partie-room-tags>
+        <div *ngIf="showTagsErrorMsg" class="validation-error" style="margin: 0 0 20px;">
+          Tags are required
+        </div>
+
+        <div class="form-control custom-select">
+          <label for="gamePlatform">Platform</label>
+          <select [(ngModel)]="createRoomRequest.gamePlatforms" #gamePlatform="ngModel" name="gamePlatform" required>
+            <option value="" disabled selected>Select game Platforms</option>
+            <option *ngFor="let gp of gamePlatforms; let i = index" [value]="gp">{{gp}}</option>
+          </select>
+          <div *ngIf="(room.submitted && gamePlatform.invalid) || (gamePlatform.invalid && (gamePlatform.dirty || gamePlatform.touched))" class="validation-error">
+            <div *ngIf="gamePlatform.errors.required">Platform is required; Add one of these platforms in your profile: <br> {{model.gamePlatforms}}</div>
+          </div>
+        </div>
+
+
+        <div class="form-control custom-select">
+          <label for="gameType">Game Type</label>
+          <select placeholder="Select Game Types" [(ngModel)]="createRoomRequest.gameTypes" #gameType="ngModel" name="gameType">
+            <option value="" disabled selected>Select game types</option>
+            <option *ngFor="let type of gameTypes; let i = index" [value]="type">{{type}}</option>
+          </select>
+          <!--<div *ngIf="(room.submitted && gameType.invalid) || (gameType.invalid && (gameType.dirty || gameType.touched))" class="validation-error">
+            <div *ngIf="gameType.errors.required">Game Type is required</div>
+          </div>-->
+        </div>
+
+        <div class="form-control custom-select">
+          <label for="roleName">Role / Class</label>
+          <select [(ngModel)]="createRoomRequest.roleName" #roleName="ngModel" name="roleName">
+            <option value="" disabled selected>Select roles / classes</option>
+            <option *ngFor="let rm of roleNames; let i = index" [value]="rm">{{rm}}</option>
+          </select>
+          <!--<div *ngIf="(room.submitted && roleNames.invalid) || (roleNames.invalid && (roleNames.dirty || roleNames.touched))" class="validation-error">
+            <div *ngIf="roleNames.errors.required">Role / Class is required</div>
+          </div>-->
+        </div>
+
+        <div class="form-control custom-select">
+          <label for="expert">Expertise</label>
+          <select placeholder="Select Game Expertise" [(ngModel)]="createRoomRequest.expertise" #expert="ngModel" name="expert" required >
+            <option value="" disabled selected>Select game expertise</option>
+            <option *ngFor="let ex of expertise; let i = index" [value]="ex">{{ex}}</option>
+          </select>
+          <div *ngIf="(room.submitted && expert.invalid) || (expert.invalid && (expert.dirty || expert.touched))" class="validation-error">
+            <div *ngIf="expert.errors.required">Role / Class is required</div>
+          </div>
+        </div>
+
+        <div class="form-control">
+          <label for="objective">Objective</label>
+          <input [(ngModel)]="createRoomRequest.objective" type="text" #objective="ngModel" name="objective" placeholder="Enter your Partie's objective (max 150 characters)" value="" required maxlength="150" />
+          <div *ngIf="(room.submitted && objective.invalid) || (objective.invalid && (objective.dirty || objective.touched))" class="validation-error">
+            <div *ngIf="objective.errors.required">Objective is required.</div>
+          </div>
+        </div>
+
+        <div [ngClass]="(createRoomRequest.private)?'setting-toggle pt-0 on':'setting-toggle pt-0'">
+          <div class="toggle-main">
+            <div class="label-group">
+              <span class="setting-toggle-label">Privacy</span>
+            </div>
+            <div class="switch-group">
+              <span class="status-message on">Closed Partie</span>
+              <span class="status-message off">Open Partie</span>
+              <label class="switch icons-lg">
+                <input type="checkbox" (change)="onPrivacyChange()">
+                <span class="slider round"></span>
+                <img src="/assets/images/icons/16px/lock-green.svg" alt="Locked Icon">
+                <img src="/assets/images/icons/16px/unlocked.svg" alt="Unlocked Icon">
+              </label>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div [ngClass]="(createRoomRequest.addTemplate)?'setting-toggle on':'setting-toggle'">
+          <div class="toggle-main">
+            <div class="label-group">
+              <span class="setting-toggle-label">Save as template </span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" (change)="onCreateTemplateChange()">
+              <span class="slider round"></span>
+              <img src="/assets/images/icons/misc/check-green.svg" alt="Check Icon">
+              <img src="/assets/images/icons/misc/check.svg" alt="Check Icon">
+            </label>
+          </div>
+        </div>
+
+        <br />
+        <div [ngClass]="(createRoomRequest.addPost)?'setting-toggle on':'setting-toggle'">
+          <div class="toggle-main">
+            <div class="label-group">
+              <span class="setting-toggle-label">Publish to feed</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" (change)="onAddToFeedChange()">
+              <span class="slider round"></span>
+              <img src="/assets/images/icons/misc/check-green.svg" alt="Check Icon">
+              <img src="/assets/images/icons/misc/check.svg" alt="Check Icon">
+            </label>
+          </div>
+        </div>
+        <div [ngClass]="(createRoomRequest.termsAndConditionsAccepted)?'setting-toggle on':'setting-toggle'">
+          <div class="toggle-main">
+            <div class="label-group">
+              <span class="setting-toggle-label small">Agree to <a (click)="openTermsPopup()" href="javascript:void(0)">Partie Terms & Conditions</a></span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" (change)="onTermsAndConditionsChange()">
+              <span class="slider round"></span>
+              <img src="/assets/images/icons/misc/check-green.svg" alt="Check Icon">
+              <img src="/assets/images/icons/misc/check.svg" alt="Check Icon">
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="btn bg-teal mv-24" >Host Partie</button>
+
+      </form>
+    </div>
+  </div>
+</div>
+<partie-termsandconditions [isActive]="termsIsActive" (TermsModalStatus)='closeTermsPopup($event)'></partie-termsandconditions>
+<partie-create-template *ngIf="showTemplateNameDialogue"
+                        (close)="closeCreateTemplateDialog($event)">
+</partie-create-template>

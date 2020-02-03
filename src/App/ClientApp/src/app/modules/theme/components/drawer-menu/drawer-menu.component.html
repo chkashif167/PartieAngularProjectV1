@@ -1,0 +1,18 @@
+<div class="menu-drawer" [ngClass]="showMenu ? 'menu-drawer active' : 'menu-drawer' " >
+  <div class="content">
+
+    <button *ngFor="let item of menu; trackBy: trackByFn"
+            class="btn btn-bare btn-menu-item"
+            (click)="menuClickHandler(item)">
+
+      <div class="btn-inner">
+        <img *ngIf="item.iconUrl" [src]="item.iconUrl" alt="Report Icon">
+        <span class="action-title">{{item.title}}</span>
+        <span class="action-description">{{item.description}}</span>
+      </div>
+    </button>
+
+  </div>
+</div>
+
+<div id="overlayDiv" [ngClass]="showMenu ? 'overlay' : '' " (click)="toggleMenu(false)"></div>

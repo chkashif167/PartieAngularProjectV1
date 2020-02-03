@@ -1,0 +1,77 @@
+<div class="page page-chat page-partie-room show-user-list">
+
+  <partie-header 
+  [title]="room.displayName"
+  [subTitle]="room.gameTitle"
+  [backUrl]="'/partie'" 
+  [showNotification]="'true'" 
+  [contextMenu] = "contextMenu"
+  (menuClick)="contextMenuClicked($event)">
+
+    <div class="chat-user-list">
+      <div class="users" (click)="showRoomUsers()">
+        <span class="user-names">{{commaSeparatedRoomUserNames}}</span>
+        <span *ngIf="moreRoomUsersCount !== 0" class="users-more">+{{moreRoomUsersCount}} more</span>
+      </div>
+      <div *ngIf="isHost && !room.partieEnded" class="user-actions">
+        <button title="Invite Users" class="btn btn-bare" (click)="inviteFollower()">
+          <img src="/assets/images/icons/24px/add.svg"
+               alt="Invite Users">
+        </button>
+        <button title="Pending joining requests" class="btn btn-bare" (click)="showJoinRoomRequests()">
+          <img src="/assets/images/icons/24px/chat.svg"
+               alt="Pending joining requests">
+        </button>
+       
+      </div>      
+    </div>
+
+  </partie-header>
+
+  <main class="content">
+
+    <div #viewport class="chat-messages viewport" id="msgViewport">
+
+      <ng-container *ngIf="virtualScrollService.dataSource">
+        <div *uiScroll="let item of virtualScrollService.dataSource">
+          <!--<cdk-virtual-scroll-viewport [itemSize]="50" class="example-viewport">-->
+          <!--<div class="example-item" *cdkVirtualFor="let item of chatDataSource;trackBy: trackByFn">-->
+
+          <partie-chat-room-message *ngIf="item"
+                                    [userId]="item.userId"
+                                    [type]="item.messageType"
+                                    [userDisplayName]="item.userDisplayName"
+                                    [timestamp]="formatTimestamp(item.timestamp)"
+                                    [message]="item.message">
+
+          </partie-chat-room-message>
+          <!--</div>-->
+          <!--</cdk-virtual-scroll-viewport>-->
+        </div>
+      </ng-container>
+    </div>
+  </main>
+
+  <form (submit)="sendMessage()" autocomplete="off">
+
+    <emoji-mart [class.hidden]="!showEmojiMart" (emojiClick)="addEmoji($event)"
+                [style]="{ position: 'fixed', bottom: '80px', right: '10px',width: '300px' , 'z-index': 999 }"
+                [showPreview]="true">
+    </emoji-mart>
+    <div class="chat-input">
+
+      <div class="form-control">
+        <input style="width: 90%; margin-left: 2px;" (focus)="onMessageFocused()" autocomplete="off" [attr.disabled]="room.partieEnded || !room.partieStarted ? '' : null" [(ngModel)]="message" name="message" id="message-input" placeholder="{{messagePlaceHolder}}" />
+        <ngx-emoji *ngIf="!room.partieEnded && room.partieStarted" (emojiClick)="toggleEmojiMart()" emoji=":grinning::skin-tone-3:" size="20"></ngx-emoji>
+      </div>
+
+      <button [attr.disabled]="room.partieEnded || !room.partieStarted ? '' : null" type="submit" class="btn">Send</button>
+
+    </div>
+  </form>
+
+ 
+
+
+
+</div>  

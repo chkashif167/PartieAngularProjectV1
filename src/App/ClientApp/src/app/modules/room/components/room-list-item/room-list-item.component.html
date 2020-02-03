@@ -1,0 +1,28 @@
+<div class="partie-item partie-item--detailed" (click)="joinRoom();">
+  <div class="image-block">
+    <img src="{{roomGameImage}}" alt="Partie Image Alt">
+    <div class="image-overlay">
+    
+      <img src="/assets/images/icons/24px/partie-filled-red.svg" class="icon-full" alt="Partie Icon">
+      <span class="partie-spots">{{room.participantsCount}} / {{room.inviteesCount}}</span>
+      <span class="time-remaining ">
+        {{room.elapsedDuration}}
+      </span>
+    </div>
+  </div>
+  <div class="content-block">
+    <span class="partie-title">
+      {{room.displayName}}
+      <span  class="small-text">{{caption}}</span>
+    </span>
+    <p class="partie-description">{{room.description}}</p>
+    <div class="partie-meta">
+      <div class="partie-badges">
+        <!--<img src="/assets/images/icons/16px/xbox-blue-muted.svg" alt="Xbox Icon">-->
+        <div *ngFor="let tag of room.tagsList" class="tag bg-blue">{{tag}}</div>
+      </div>
+      <span class="partie-game">{{room.gameTitle}}</span>
+    </div>
+    <span class="partieHhostBy" (click)="navigateToProfile($event)"> <span> Hosted By: </span> {{room.hostName}}</span>
+  </div>
+</div>

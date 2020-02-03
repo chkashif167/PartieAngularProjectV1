@@ -1,0 +1,35 @@
+<div [ngSwitch]="type">
+  <div *ngSwitchCase="messageType.Regular" class="chat-message item">
+    <!--<img src="" [userId]="userId"/>-->
+    <img #avatarImg src="" [userId]="userId" alt="Avatar" class="avatar"/>
+    <div class="chat-message-meta">
+      <span class="chat-message-author">{{userDisplayName}}</span>
+      <!--<div class="tag tag-partner"><span>Partner</span></div>-->
+      <span class="chat-message-details">{{timestamp}}</span>
+    </div>
+    <div class="chat-message-content">
+      {{message}}
+    </div>
+  </div>
+  <div *ngSwitchCase="messageType.UserJoined" class="chat-notification item">
+    <span class="message"><strong>{{userDisplayName}}</strong> has joined the Partie</span>
+    <div class="detail">{{timestamp}}</div>
+  </div>
+
+  <div *ngSwitchCase="messageType.UserLeft" class="chat-notification item" style="background-color: orange;">
+    <span class="message"><strong>{{userDisplayName}}</strong> has left the Partie</span>
+    <div class="detail">{{timestamp}}</div>
+  </div>
+
+  <div *ngSwitchCase="messageType.PartieEnded" class="chat-notification item" style="background-color: orange;">
+    <span class="message"><strong>{{userDisplayName}}</strong> has ended the Partie</span>
+    <div class="detail">{{timestamp}}</div>
+  </div>
+
+  <div *ngSwitchCase="messageType.UserBanned" class="chat-notification item" style="background-color: red;">
+    <span class="message"><strong>{{userDisplayName}}</strong> has been banned from the Partie</span>
+    <div class="detail">{{timestamp}}</div>
+  </div>
+
+
+</div>

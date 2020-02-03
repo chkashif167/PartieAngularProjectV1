@@ -1,0 +1,20 @@
+<div class="tap-bar">
+  <nav>
+    <a [routerLink]="['/']" class="btn btn-bare btn-tap-bar">
+      <img src="/assets/images/icons/24px/home-filled.svg" alt="Home Icon">
+      <span class="t-nav">Home</span>
+    </a>
+    <a [routerLink]="['/partie']" class="btn btn-bare btn-tap-bar">
+      <img src="/assets/images/icons/24px/partie.svg" alt="Partie Icon">
+      <span class="t-nav">Partie</span>
+    </a>
+    <a [routerLink]="['/messages']" class="btn btn-bare btn-tap-bar">
+      <img src="/assets/images/icons/24px/chat.svg" alt="Chat Icon">
+      <span class="t-nav">Messages</span>
+    </a>
+    <button class="btn btn-bare btn-tap-bar" (click)="navigate('/account')">
+      <img src="/assets/images/icons/24px/account.svg" alt="Account Icon">
+      <span class="t-nav">Account</span>
+    </button>
+  </nav>
+</div>

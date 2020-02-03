@@ -1,0 +1,21 @@
+<div class="page page-preferences">
+  <partie-header 
+	[title]="'Preferences'"
+  [backUrl]="'/account'" 
+  [showNotification]="'true'" 
+  >
+  </partie-header>
+
+  <main class="content">
+    
+    <div class="preference-item" (click)="openRegionsMultiSelect()">
+      <span class="preference-label">Region Lock</span>
+      <span class="preference-current">{{selectedRegions}}</span>
+    </div>
+    <div class="preference-item" (click)="openLanguagesMultiSelect()">
+      <span class="preference-label">Language</span>
+      <span class="preference-current">{{selectedLanguages}}</span>
+    </div>
+
+  </main>
+</div>

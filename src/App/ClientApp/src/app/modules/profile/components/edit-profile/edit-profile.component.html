@@ -1,0 +1,183 @@
+<div class="page page-edit-profile">
+  <partie-header 
+	[title]="'Edit Profile'"
+  [backUrl]="'/profile'" 
+  [showNotification]="'false'" 
+  >
+  <a class="btn btn-bare" (click)="onSubmit()"><span class="btn-inner">Save</span></a>
+  </partie-header>
+  
+  <ng-template #asyncValidate>
+    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div><span>validating</span></div>
+  </ng-template>
+
+  <main class="content">
+    <div class="avatar-setting">
+      <img src="" *ngIf="user.id !== undefined " [userId]="user.id" [largeSize]="'false'" />
+      <a href="JavaScript:void(0);" (click)="openFileDialog()">Upload Photo</a>
+      <span *ngIf="fileUploadPercent == 0" class="filename">{{avatarImage?.name || ''}}</span> <span class="filename" style="font-size: 11px;" *ngIf="fileUploadPercent > 0">Uploading... {{fileUploadPercent}}%</span>
+      <input type="file" #fileInput id="file"
+             (change)="handleFileInput($event.target.files)"
+             accept="image/jpg"
+             style="display: none;">
+
+
+
+    </div>
+    
+    <form name="profile" #profile="ngForm" class="form" (ngSubmit)="profile.form.valid && onSubmit()" novalidate>
+      <div class="form-control ">
+        <label for="firstName">First Name</label>
+        <input type="text" [(ngModel)]="user.firstName" name="firstName" #firstName="ngModel" maxlength="100" placeholder="Enter your first name" required autocomplete="false2" />
+        <div *ngIf="(profile.submitted && firstName.invalid) || (firstName.invalid && (firstName.dirty || firstName.touched))" class="validation-error">
+          <div *ngIf="firstName.errors.required">First name is required.</div>
+        </div>
+      </div>
+
+      <div class="form-control ">
+        <label for="lastName">Last Name</label>
+        <input type="text" [(ngModel)]="user.lastName" name="lastName" #lastName="ngModel" maxlength="100" placeholder="Enter your last name" required autocomplete="false3" />
+        <div *ngIf="(profile.submitted && lastName.invalid) || (lastName.invalid && (lastName.dirty || lastName.touched))" class="validation-error">
+          <div *ngIf="lastName.errors.required">Last name is required.</div>
+        </div>
+      </div>
+
+      <div class="form-control ">
+        <label for="email">Email<span *ngIf="!user.emailVerified" class="small-red-text">(Your email is not verified. Please click <a href="javascript:void(0);" (click)="verifyEmail()">here</a> to verify your email.)</span></label>
+
+        <input type="email" [(ngModel)]="user.email" name="email" #email="ngModel" maxlength="255"
+               placeholder="Enter a valid email address"
+               pattern="{{emailPattern}}"
+               duplicateValue="email"
+               required autocomplete="false4" />
+        <ng-template [ngTemplateOutlet]="asyncValidate" *ngIf="email.pending"></ng-template>
+        <div *ngIf="(profile.submitted && email.invalid) || (email.invalid && (email.dirty || email.touched))" class="validation-error">
+          <div *ngIf="email.errors.required">Email is required.</div>
+          <div *ngIf="email.errors?.pattern">Email must be a valid email address</div>
+          <div *ngIf="email.errors?.duplicateValue">Email {{user.email}} is already taken.</div>
+          <div *ngIf="email.errors?.serverError">Something went wrong try again.</div>
+        </div>
+
+      </div>
+
+      <div class="form-control ">
+        <label for="displayName">Display Name</label>
+        <input type="text" [(ngModel)]="user.displayName" name="displayName" #displayName="ngModel" maxlength="100" placeholder="Enter your Display Name" required autocomplete="false3"
+               duplicateValue="displayName" />
+        <ng-template [ngTemplateOutlet]="asyncValidate" *ngIf="displayName.pending"></ng-template>
+        <div *ngIf="(profile.submitted && displayName.invalid) || (displayName.invalid && (displayName.dirty || displayName.touched))" class="validation-error">
+          <div *ngIf="displayName.errors.required">Display name is required.</div>
+          <div *ngIf="displayName.errors.duplicateValue">Display name {{user.displayName}} is already taken.</div>
+        </div>
+      </div>
+
+      <div class="form-control playstyle ">
+        <label for="playStyle">Play Style:</label>
+        <span class="playstyleitem">
+          <label>
+            <input [(ngModel)]="user.playStyle" value="Casual" type="radio" name="playStyle" #playStyle="ngModel" required autocomplete="false3" /> Casual
+          </label>
+        </span>
+        <span class="playstyleitem">
+          <label>
+            <input [(ngModel)]="user.playStyle" value="Expert" type="radio" name="playStyle" #playStyle="ngModel" required autocomplete="false3" /> Expert
+          </label>
+        </span>
+
+        <div *ngIf="(profile.submitted && playStyle.invalid) || (playStyle.invalid && (playStyle.dirty || playStyle.touched))" class="validation-error">
+          <div *ngIf="playStyle.errors.required">PlayStyle name is required.</div>
+        </div>
+      </div>
+
+
+      <div class="form-control">
+        <label for="rankCombined">Rank (Worldwide/Countrywide):</label>
+        <input type="text" [(ngModel)]="user.rankCombined" mask="000/000" [showMaskTyped]="true" name="rankCombined" #rankWorldwide="ngModel"
+               placeholder="Tap to select your Rank (Worldwide/Countrywide)" />
+
+
+      </div>
+
+      <!--<div class="form-control ">
+      <label for="dob">Date of Birth</label>
+      <input type="date" [(ngModel)]="user.dateOfBirth" name="dateOfBirth" #dateOfBirth="ngModel" agelimit required placeholder="Tap to select your date of birth" autocomplete="false5" />
+      <div *ngIf="(profile.submitted && dateOfBirth.invalid) || (dateOfBirth.invalid && (dateOfBirth.dirty || dateOfBirth.touched))" class="validation-error">
+        <div *ngIf="dateOfBirth.errors.required">Date of birth is required.</div>
+        <div *ngIf="dateOfBirth.errors.ageLimit">{{dateOfBirth.errors.ageLimit}}</div>
+      </div>
+    </div>-->
+
+
+
+      <div class="form-control ">
+        <label for="phone">Phone<span class="small-red-text">(If you changed your phone you will be logged out)</span></label>
+
+        <input type="text" [(ngModel)]="user.phoneNumber" name="phoneNumber" maxlength="20" #phoneNumber="ngModel"
+               duplicateValue="phone"
+               pattern="[0-9\-()\s\+]+"
+               placeholder="Enter a phone number unique to your account" required />
+        <ng-template [ngTemplateOutlet]="asyncValidate" *ngIf="phoneNumber.pending"></ng-template>
+        <div *ngIf="(profile.submitted && phoneNumber.invalid) || (phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched))" class="validation-error">
+          <div *ngIf="phoneNumber.errors.required">Phone number is required.</div>
+          <div *ngIf="phoneNumber.errors.pattern">Phone must be a valid phone number.</div>
+          <div *ngIf="phoneNumber.errors.duplicateValue">Phone {{user.phoneNumber}} is already taken.</div>
+          <div *ngIf="phoneNumber.errors?.serverError">Something went wrong try again.</div>
+        </div>
+      </div>
+
+      <!--<div class="form-control ">
+      <label for="location">Location</label>
+      <label>{{user.country}}</label>
+    </div>-->
+
+
+      <div class="form-control">
+        <label for="bio">Bio</label>
+        <textarea [(ngModel)]="user.biography" #bio="ngModel" name="bio" id="bio"></textarea>
+      </div>
+
+      <div class="form-control ">
+        <label for="profileLink">Link</label>
+        <input type="text" [(ngModel)]="user.externalLink" #link="ngModel" name="profileLink" placeholder="" placehodler="http:&#x2F;&#x2F;www.mysite.com" />
+        <!--<div *ngIf="link.errors.pattern">Must be a valid url.</div>-->
+      </div>
+
+      <div class="form-control platforms-select custom-select">
+        <label for="platforms">Platforms</label>
+        <input type="text" name="platforms"
+               placeholder="Select Your Platforms"
+               (click)="openGamingPlatformMultiSelect()"
+               [ngModel]="selectedGamingPlatforms" />
+
+      </div>
+     
+
+        <div class="social-connection" *ngIf="!hasSocialMediaAccount; else facebook" >
+        
+            <span class="btn btn-bare facebook-connect ">
+              <img src="assets/images/facebook.png" srcset="/images/facebook@2x.png 2x, /images/facebook@3x.png 3x" alt="Facebook Logo">
+              <span>Facebook User</span>
+            </span>
+         
+        </div>
+
+
+        <ng-template class="social-connection" #facebook>
+          <span class="btn btn-bare facebook-connect ">
+            <span class="btn-inner unlinkdText">
+              <img src="assets/images/facebook.png" srcset="/images/facebook@2x.png 2x, /images/facebook@3x.png 3x" alt="Facebook Logo">
+            </span>
+            <span>{{user.linkedSocialAccountUserName}}</span>
+          </span>
+          <a class="unLinkAccount" (click)="unLinkAccount()"> Unlink Account</a>
+        </ng-template>
+     
+
+
+    </form>
+
+  </main>
+
+
+
+</div>

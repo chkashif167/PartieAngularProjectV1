@@ -1,0 +1,39 @@
+<div class="partner-progress"
+
+ 
+[ngClass]="isExpanded ? 'expanded' : ''">
+  <div class="progress-primary" (click)="toggleExpandedClass()" >
+    <img
+      src="/assets/images/icons/24px/partie-filled-blue-muted.svg"
+      alt="Partie Logo"
+    />
+    <span class="progress-title">Partner Progress</span>
+    <div class="progress-indicator">
+      <span class="progress-percent">{{ progressPrcent }}%</span>
+      <div #progressBar class="progress-bar"></div>
+    </div>
+  </div>
+
+  <div class="progress-checklist" id="checkList">
+    <div *ngFor="let achievment of achievements" class="checklist-item ">
+      <img *ngIf="achievment.target != achievment.achieved"
+           src="/assets/images/icons/misc/bullet-point.svg"
+           alt="Bullet Point Icon" />
+      <img *ngIf="achievment.target == achievment.achieved"
+           src="/assets/images/icons/misc/check-green.svg"
+           alt="Bullet Point Icon" />
+      <span class="checklist-description">{{ achievment.description }}</span>
+      <span class="checklist-progress">
+        <span class="checklist-required">{{ achievment.target }}</span>
+        <span class="checklist-divider"> / </span>
+        <span class="checklist-completed">{{ achievment.accomplished }}</span>
+      </span>
+    </div>
+    <div *ngIf="achievements.length == 0" class="p-flex-center">You haven't successfully hosted a partie yet.</div>
+  </div>
+ 
+  <button
+    class="btn btn-bare btn-fill progress-collapse" (click)="isExpanded=!isExpanded" >
+    <img src="/assets/images/icons/16px/arrow.svg" alt="Collapse Icon" />
+  </button>
+</div>

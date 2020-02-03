@@ -1,0 +1,9 @@
+
+<button *ngIf="this.friend.isHost==false" (click)="openBanReasonDialog()" id="removeButton" class="btn btn-bare o-25"><img src="/assets/images/icons/32px/remove.svg" alt=""></button>
+
+<partie-remove-room-user-dialog *ngIf="showDialog"
+                                [friend]="friend"
+                                (close)="closeBanReasonDialog($event)"
+                                id="removeUserDialog">
+
+</partie-remove-room-user-dialog>

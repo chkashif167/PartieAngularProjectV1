@@ -1,0 +1,16 @@
+/*.btn-facebook:before {
+  background-image: url("/assets/fb-icon.svg");
+}
+
+.icon-background {
+  
+  background-image: linear-gradient(180deg, rgba(97, 63, 234, 0), #613FEA), url(/assets/gamer-bg.svg);
+}
+
+.btn {
+  border-radius: 90px !important;
+}
+
+.bg-dark {
+  background: var(--color-dark) !important;
+}*/

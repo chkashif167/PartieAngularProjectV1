@@ -1,0 +1,24 @@
+<div class="full-screen icon-background">
+  <div class="content page-login">
+    <img src="/assets/images/logo-lockup.svg" alt="Partie Logo" class="logo">
+    <section class="text-main">
+      <h1>Welcome to the future of gamer matchmaking</h1>
+      <p  *ngIf="!user">Sign In or Create Account to get started</p>
+    </section>
+    <section *ngIf="!user" class="btn-group">
+      <a class="btn bg-dark btn-facebook" (click)="loginWithFacebook()">
+        Connect with Facebook
+      </a>
+
+      <a class="btn btn-outline" (click)="login()">
+        Sign In
+      </a>
+
+      <button class="btn bg-teal" (click)="register()">
+        Create Account
+      </button>
+
+    </section>
+    <p class="contact">Need help? <a href="#">Contact Us</a></p>
+  </div>
+</div>

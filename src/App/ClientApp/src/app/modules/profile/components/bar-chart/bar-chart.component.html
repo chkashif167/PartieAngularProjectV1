@@ -1,0 +1,56 @@
+
+
+  <div class="weekly-stats">
+    <div class="stats-header">
+      <button class="btn btn-bare previous" (click)="getLastWeekData()"><img src="/assets/images/icons/16px/previous.svg" alt="Previous Icon" ></button>
+      <span class="date-range">{{weekTitle}}</span>
+      <button class="btn btn-bare next" [disabled]="isCurrentWeek" (click)="getNextWeekData()" ><img src="/assets/images/icons/16px/next.svg" alt="Next Icon"  ></button>
+    </div>
+    <div class="stats-chart">
+      <div *ngIf="roomStats.chartData.length > 0">
+        <div style="display: block; height: 250px">
+          <canvas baseChart
+                  [datasets]="barChartData"
+                  [labels]="barChartLabels"
+                  [options]="barChartOptions"
+                  [plugins]="barChartPlugins"
+                  [legend]="barChartLegend"
+                  [chartType]="barChartType"
+                  [colors]="barChartColors">
+          </canvas>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="stat-group">
+    <div class="stat">
+      <span class="stat-value h1">{{timeInParties}} hrs</span>
+      <span class="stat-label t-nav">Time in Parties</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value h1">{{partiesCompleted}}</span>
+      <span class="stat-label t-nav">Parties Completed</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value h1">{{badgesReceived}}</span>
+      <span class="stat-label t-nav">Badges Received</span>
+    </div>
+  </div>
+
+  <div class="stat-divider"><span class="t-nav">All-Time Stats</span></div>
+  <div class="stat-group">
+    <div class="stat">
+      <span class="stat-value h1">{{totalTimeInParties}} hrs</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value h1">{{totalPartiesCompleted}}</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value h1">{{totalBadgesReceived}}</span>
+    </div>
+  </div>
+
+
+ 

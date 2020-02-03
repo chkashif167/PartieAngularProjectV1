@@ -1,0 +1,29 @@
+<header [ngClass]="subTitle ? 'subtitle' : '' ">
+  <div class="content">
+    <div class="actions--left">
+      <button class="btn btn-bare" (click)="leftButton()"><img [src]="btnLeftIcon" alt=""></button>
+    </div>
+     <h1 class="h2 t-center">{{mainTitle}}</h1>
+    <div class="actions--right">
+      <button class="btn btn-bare"
+              *ngIf="hasContextMenu"
+              (click)="showDrawerMenu()">
+        <img src="/assets/images/icons/24px/more.svg" alt="More Icon">
+      </button>
+
+      <button class="btn btn-bare"
+              *ngIf="showNotificationButton === true"
+              (click)="notification()">
+        <img src="{{notificationImageUrl}}" alt="Unread Notifications Icon">
+      </button>
+      <ng-content select="a"></ng-content>
+    </div>
+  </div>
+  <p *ngIf="subTitle" class="header-subtitle t-center">{{subTitle}}</p>
+  <ng-content></ng-content>
+</header>
+
+
+<partie-drawer-menu [menu]="contextMenu" (menuClick)="contextMenuClick($event)"></partie-drawer-menu>
+
+

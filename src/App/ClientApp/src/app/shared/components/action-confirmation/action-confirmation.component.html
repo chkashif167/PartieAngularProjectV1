@@ -1,0 +1,18 @@
+<div [ngClass]="model.modelClass">
+  <div class="modal-overlay"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h2 class="modal-title"></h2>
+      <button class="btn bg-black btn-close" (click)="onBackButtonClick($event)">
+        <img src="/assets/images/icons/misc/close-x.svg" alt="Close Icon">
+      </button>
+    </div>
+    <div class="modal-content" (click)="onDialogClick($event)">
+      <h2>{{model.heading}}</h2>
+      <div class="btn-group">
+        <button class="btn btn-outline" (click)="confirm(true)">{{model.btnYesText}}</button>
+        <button class="btn bg-teal" (click)="confirm(false)">{{model.btnCancelText}}</button>
+      </div>
+    </div>
+  </div>
+</div>

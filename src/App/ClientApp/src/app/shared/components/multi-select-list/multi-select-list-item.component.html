@@ -1,0 +1,9 @@
+
+<div class="checkbox-item">
+  <label [ngClass]="checked ? 'checkbox checked' : 'checkbox'">
+    <span>{{name}}</span>
+    <input type="checkbox" (change)="toggleCheckboxClass()">
+    <img src="/assets/images/icons/misc/check.svg" class="check-icon-off" alt="Check Icon">
+    <img src="/assets/images/icons/misc/check-green.svg" class="check-icon-on" alt="Check Icon">
+  </label>
+</div>

@@ -1,0 +1,67 @@
+<div class="page page-chat page-partie-room">
+  <partie-header [title]="messagesService.toUser.displayName"
+                 [backUrl]="'messages'"
+                 [showNotification]="'true'">
+  </partie-header>
+
+  <main class="content">
+    <div #msgViewport class="chat-messages viewport" id="msgViewport">
+
+      <ng-container *ngIf="virtualScrollService.dataSource">
+
+        <div *uiScroll="let item of virtualScrollService.dataSource">
+          <div class="chat-message item">
+
+
+            <img src="" [userId]="item.userId" #avatarImg  alt="Avatar" class="avatar"/>
+            <div class="chat-message-meta">
+              <span class="chat-message-author">{{ item.userName }}</span>
+
+              <span class="chat-message-details">
+                {{formatTimestamp(item.timestamp)}}
+              </span>
+            </div>
+            <div class="chat-message-content">
+              {{ item.message }}
+              <button *ngIf="item.deleted != true"
+                      class="btn btn-bare o-25 del_message_button"
+                      (click)="deleteMessage(item.id)">
+                <img src="assets/images/icons/32px/remove.svg" alt="" />
+              </button>
+            </div>
+
+
+
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </main>
+  <emoji-mart [class.hidden]="!showEmojiMart"
+              (emojiClick)="addEmoji($event)"
+              [style]="{
+      position: 'fixed',
+      bottom: '80px',
+      right: '10px',
+      width: '300px',
+      'z-index': 999
+      
+    }"
+              [showPreview]="true">
+  </emoji-mart>
+  <form (submit)="sendMessage()" autocomplete="off">
+    <div class="chat-input" *ngIf="messagesService.directMessagingAllowed">
+      <div class="form-control">
+        <input name="chat-message"
+               id="message-input"
+               placeholder="Say anything you want, be nice."
+               [(ngModel)]="message"
+               (focus)="onMessageFocused()" />
+        <ngx-emoji (emojiClick)="toggleEmojiMart()"
+                   emoji=":grinning::skin-tone-3:"
+                   size="20"></ngx-emoji>
+      </div>
+      <button class="btn" (click)="sendMessage()">Send</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,54 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "src",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+
+      "@partie/*": [ "app/*" ],
+
+      "@env/*": [ "environments/*" ],
+      "@assets/*": [ "assets/*" ],
+
+      // Modules
+      "@partie/auth/*": [ "app/modules/auth/*" ],
+      "@partie/account/*": [ "app/modules/account/*" ],
+      "@partie/dashboard/*": [ "app/modules/dashboard/*" ],
+      "@partie/directive/*": [ "app/modules/directive/*" ],
+      "@partie/direct-messaging/*": [ "app/modules/direct-messaging/*" ],
+      "@partie/feeds/*": [ "app/modules/feeds/*" ],
+      "@partie/game/*": [ "app/modules/game/*" ],
+      "@partie/profile/*": [ "app/modules/profile/*" ],
+      "@partie/register/*": [ "app/modules/register/*" ],
+      "@partie/room/*": [ "app/modules/room/*" ],
+      "@partie/startup/*": [ "app/modules/startup/*" ],
+      "@partie/theme/*": [ "app/modules/theme/*" ],
+      "@partie/verify/*": [ "app/modules/verify/*" ],
+      "@partie/notification/*": [ "app/modules/notification/*" ]
+
+
+
+    }
+
+  }
+}

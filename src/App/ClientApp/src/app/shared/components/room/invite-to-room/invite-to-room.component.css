@@ -1,0 +1,8 @@
+button.btn.btn-outline.btn-fit.resend:active, button.btn.btn-outline.btn-fit.pending:active, button.btn.btn-outline.btn-fit.invite:active {
+opacity: 0.2;
+transition: 0s
+}
+button.btn.btn-fit.joined {
+cursor: default;
+}
+ 

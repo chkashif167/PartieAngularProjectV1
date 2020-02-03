@@ -1,0 +1,349 @@
+<div class="modal active" id="badges-modal">
+  <div class="modal-overlay"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h2 class="modal-title">Badges</h2>
+      <button class="btn bg-black btn-close" (click)="close()">
+        <img src="assets/images/icons/misc/close-x.svg" alt="Close Icon">
+      </button>
+    </div>
+    <div class="modal-content">
+      <div class="content-scrollable">
+        <div class="section-header">
+          <span class="t-nav">Tokens</span>
+        </div>
+        <div class="badge-group">
+          <div *ngFor="let badge of badgeStats.complimentBadges"
+               [ngClass]="badge.total > 0 ? 'token' :  'token empty'"
+               title="{{badge.title}}">
+            <img [src]="getBadgeUrl(badge.badgeCode)" alt="Token">
+            <div class="token-value"><span>{{badge.total}}</span></div>
+          </div>
+        </div>
+        <div class="section-header">
+          <span class="t-nav">Achievements</span>
+        </div>
+        <div class="badge-group">
+          <div *ngFor="let badge of badgeStats.achievementBadges"
+               [ngClass]="badge.hasWon ? 'achievement' : 'achievement incomplete'"
+               title="{{badge.title}}">
+            <svg class="level-indicator" data-percentage="" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF" />
+                  <stop offset="0.498893" stop-color="#2BC5CF" />
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF" />
+                  <stop offset="0.510417" stop-color="#792DDA" />
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)"></circle>
+            </svg>
+            <img [src]="getAchievementBadgeUrl(badge.badgeCode)" alt="Achievement">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div class="modal active" id="badges-modal">
+  <div class="modal-overlay"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h2 class="modal-title">14 Badges</h2>
+      <button class="btn bg-black btn-close" onclick="closeModal()">
+        <img src="/images/icons/misc/close-x.svg" alt="Close Icon">
+      </button>
+    </div>
+    <div class="modal-content">
+      <div class="content-scrollable">
+        <div class="section-header">
+          <span class="t-nav">Tokens</span>
+        </div>
+        <div class="badge-group">
+          <div class="token ">
+            <img src="/images/cheesy.png" alt="Cheese">
+            <div class="token-value"><span>239</span></div>
+          </div>
+
+          <div class="token empty">
+            <img src="/images/cheesy.png" alt="Cheese">
+            <div class="token-value"><span>0</span></div>
+          </div>
+
+          <div class="token ">
+            <img src="/images/cheesy.png" alt="Cheese">
+            <div class="token-value"><span>43</span></div>
+          </div>
+
+          <div class="token ">
+            <img src="/images/cheesy.png" alt="Cheese">
+            <div class="token-value"><span>32</span></div>
+          </div>
+
+          <div class="token ">
+            <img src="/images/cheesy.png" alt="Cheese">
+            <div class="token-value"><span>5</span></div>
+          </div>
+
+          <div class="token empty">
+            <img src="/images/cheesy.png" alt="Cheese">
+            <div class="token-value"><span>0</span></div>
+          </div>
+
+        </div>
+        <div class="section-header">
+          <span class="t-nav">Achievements</span>
+        </div>
+        <div class="badge-group">
+          <div class="achievement incomplete">
+            <svg class="level-indicator" data-percentage="60" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF"></stop>
+                  <stop offset="0.498893" stop-color="#2BC5CF"></stop>
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF"></stop>
+                  <stop offset="0.510417" stop-color="#792DDA"></stop>
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)" style="stroke-dashoffset: 216px;"></circle>
+            </svg>
+            <img src="/images/cheesy.png" alt="Cheese!">
+          </div>
+
+          <div class="achievement incomplete">
+            <svg class="level-indicator" data-percentage="0" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF"></stop>
+                  <stop offset="0.498893" stop-color="#2BC5CF"></stop>
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF"></stop>
+                  <stop offset="0.510417" stop-color="#792DDA"></stop>
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)"></circle>
+            </svg>
+            <img src="/images/cheesy.png" alt="Cheese!">
+          </div>
+
+          <div class="achievement incomplete">
+            <svg class="level-indicator" data-percentage="45" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF"></stop>
+                  <stop offset="0.498893" stop-color="#2BC5CF"></stop>
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF"></stop>
+                  <stop offset="0.510417" stop-color="#792DDA"></stop>
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)" style="stroke-dashoffset: 297px;"></circle>
+            </svg>
+            <img src="/images/cheesy.png" alt="Cheese!">
+          </div>
+
+          <div class="achievement incomplete">
+            <svg class="level-indicator" data-percentage="10" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF"></stop>
+                  <stop offset="0.498893" stop-color="#2BC5CF"></stop>
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF"></stop>
+                  <stop offset="0.510417" stop-color="#792DDA"></stop>
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)" style="stroke-dashoffset: 486px;"></circle>
+            </svg>
+            <img src="/images/cheesy.png" alt="Cheese!">
+          </div>
+
+          <div class="achievement incomplete">
+            <svg class="level-indicator" data-percentage="70" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF"></stop>
+                  <stop offset="0.498893" stop-color="#2BC5CF"></stop>
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF"></stop>
+                  <stop offset="0.510417" stop-color="#792DDA"></stop>
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)" style="stroke-dashoffset: 162px;"></circle>
+            </svg>
+            <img src="/images/cheesy.png" alt="Cheese!">
+          </div>
+
+          <div class="achievement ">
+            <svg class="level-indicator" data-percentage="100" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF"></stop>
+                  <stop offset="0.498893" stop-color="#2BC5CF"></stop>
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF"></stop>
+                  <stop offset="0.510417" stop-color="#792DDA"></stop>
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)" style="stroke-dashoffset: 0px;"></circle>
+            </svg>
+            <img src="/images/cheesy.png" alt="Cheese!">
+          </div>
+
+          <div class="achievement incomplete">
+            <svg class="level-indicator" data-percentage="90" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF"></stop>
+                  <stop offset="0.498893" stop-color="#2BC5CF"></stop>
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF"></stop>
+                  <stop offset="0.510417" stop-color="#792DDA"></stop>
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)" style="stroke-dashoffset: 54px;"></circle>
+            </svg>
+            <img src="/images/cheesy.png" alt="Cheese!">
+          </div>
+
+          <div class="achievement incomplete">
+            <svg class="level-indicator" data-percentage="0" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF"></stop>
+                  <stop offset="0.498893" stop-color="#2BC5CF"></stop>
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF"></stop>
+                  <stop offset="0.510417" stop-color="#792DDA"></stop>
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)"></circle>
+            </svg>
+            <img src="/images/cheesy.png" alt="Cheese!">
+          </div>
+
+          <div class="achievement incomplete">
+            <svg class="level-indicator" data-percentage="32" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF"></stop>
+                  <stop offset="0.498893" stop-color="#2BC5CF"></stop>
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF"></stop>
+                  <stop offset="0.510417" stop-color="#792DDA"></stop>
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)" style="stroke-dashoffset: 367px;"></circle>
+            </svg>
+            <img src="/images/cheesy.png" alt="Cheese!">
+          </div>
+
+          <div class="achievement incomplete">
+            <svg class="level-indicator" data-percentage="84" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF"></stop>
+                  <stop offset="0.498893" stop-color="#2BC5CF"></stop>
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF"></stop>
+                  <stop offset="0.510417" stop-color="#792DDA"></stop>
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)" style="stroke-dashoffset: 86px;"></circle>
+            </svg>
+            <img src="/images/cheesy.png" alt="Cheese!">
+          </div>
+
+          <div class="achievement incomplete">
+            <svg class="level-indicator" data-percentage="14" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF"></stop>
+                  <stop offset="0.498893" stop-color="#2BC5CF"></stop>
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF"></stop>
+                  <stop offset="0.510417" stop-color="#792DDA"></stop>
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)" style="stroke-dashoffset: 465px;"></circle>
+            </svg>
+            <img src="/images/cheesy.png" alt="Cheese!">
+          </div>
+
+          <div class="achievement incomplete">
+            <svg class="level-indicator" data-percentage="89" viewBox="0 0 192 192">
+              <defs>
+                <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+                  <stop offset="0.123353" stop-color="#26F2FF"></stop>
+                  <stop offset="0.498893" stop-color="#2BC5CF"></stop>
+                </radialGradient>
+
+                <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+                  <stop offset="0.104167" stop-color="#6E4AFF"></stop>
+                  <stop offset="0.510417" stop-color="#792DDA"></stop>
+                </radialGradient>
+              </defs>
+
+              <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+              <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)" style="stroke-dashoffset: 59px;"></circle>
+            </svg>
+            <img src="/images/cheesy.png" alt="Cheese!">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->

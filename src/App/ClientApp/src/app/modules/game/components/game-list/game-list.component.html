@@ -1,0 +1,16 @@
+<div class="page page-host-partie show-search">
+  <partie-header 
+	[title]="'Host Partie'"
+  [backUrl]="'/partie'" 
+  [showNotification]="'true'" 
+  >
+  <partie-search-game (search)="search($event)"></partie-search-game>
+  </partie-header>
+  <main class="content">
+    <div class="game-list">
+      <div *ngFor="let game of games">
+        <partie-game [game]="game"></partie-game>
+      </div>
+    </div>
+  </main>
+</div>

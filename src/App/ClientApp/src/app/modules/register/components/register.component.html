@@ -1,0 +1,139 @@
+<div class="page page-create-account">
+  <partie-header 
+	[title]="'Create Account'"
+  [backUrl]="'/'" 
+  [showNotification]="'false'" 
+  >
+  </partie-header>
+
+  <ng-template #asyncValidate>
+      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div><span>validating</span></div>  
+  </ng-template>
+
+
+  <main class="content">
+    <form name="profile" #profile="ngForm" class="form" (ngSubmit)="profile.form.valid && onSubmit()" novalidate>
+
+      <div class="form-control">
+        <label for="firstName">First Name</label>
+        <input type="text" [(ngModel)]="user.firstName" name="firstName" #firstName="ngModel" maxlength="100" placeholder="Enter your first name" required autocomplete="false2" />
+        <div *ngIf="(profile.submitted && firstName.invalid) || (firstName.invalid && (firstName.dirty || firstName.touched))" class="validation-error">
+          <div *ngIf="firstName.errors.required">First name is required.</div>
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label for="lastName">Last Name</label>
+        <input type="text" [(ngModel)]="user.lastName" name="lastName" #lastName="ngModel" maxlength="100" placeholder="Enter your last name" required autocomplete="false3" />
+        <div *ngIf="(profile.submitted && lastName.invalid) || (lastName.invalid && (lastName.dirty || lastName.touched))" class="validation-error">
+          <div *ngIf="lastName.errors.required">Last name is required.</div>
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label for="email">Email</label>
+        <input type="email" [(ngModel)]="user.email" name="email" #email="ngModel" maxlength="255"
+               placeholder="Enter a valid email address"
+               pattern="{{emailPattern}}"
+               duplicateValue="email"
+               required autocomplete="false4" />
+        <ng-template [ngTemplateOutlet]="asyncValidate" *ngIf="email.pending"></ng-template>
+        <div *ngIf="(profile.submitted && email.invalid) || (email.invalid && (email.dirty || email.touched))" class="validation-error">
+          <div *ngIf="email.errors.required">Email is required.</div>
+          <div *ngIf="email.errors?.pattern">Email must be a valid email address</div>
+          <div *ngIf="email.errors?.duplicateValue">Email {{user.email}} is already taken.</div>
+          <div *ngIf="email.errors?.serverError">Something went wrong try again.</div>
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label for="dateOfBirth">Date of Birth (MM/YYYY)</label>
+        <input type="text" [(ngModel)]="user.dateOfBirth" mask="00/0000" [showMaskTyped] = "true" minlength="6" name="dateOfBirth" #dateOfBirth="ngModel" agelimit required placeholder="Tap to select your date of birth" autocomplete="false5" />
+        <div *ngIf="(profile.submitted && dateOfBirth.invalid) || (dateOfBirth.invalid && (dateOfBirth.touched))" class="validation-error">
+          <div *ngIf="dateOfBirth.errors.required">Date of birth is required.</div>
+          <div *ngIf="dateOfBirth.errors.minlength">Enter proper date of birth.</div>
+          <div *ngIf="dateOfBirth.errors.ageLimit">{{dateOfBirth.errors.ageLimit}}</div>
+        </div>
+
+      </div>
+
+      <div class="form-control">
+        <label for="phoneNumber">Phone</label>
+        <input type="text" [(ngModel)]="user.phoneNumber" name="phoneNumber" maxlength="20" #phoneNumber="ngModel"
+               pattern="[0-9\-()\s\+]+"
+               duplicateValue="phone"
+               placeholder="Enter a phone number unique to your account." required />
+        <ng-template [ngTemplateOutlet]="asyncValidate" *ngIf="phoneNumber.pending"></ng-template>
+        <div *ngIf="(profile.submitted && phoneNumber.invalid) || (phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched))" class="validation-error">
+          <div *ngIf="phoneNumber.errors.required">Phone number is required.</div>
+          <div *ngIf="phoneNumber.errors.pattern">Phone must be a valid phone number.</div>
+          <div *ngIf="phoneNumber.errors.duplicateValue">Phone {{user.phoneNumber}} is already taken.</div>
+          <div *ngIf="phoneNumber.errors?.serverError">Something went wrong try again.</div>
+        </div>  
+      </div>
+
+      <div class="form-control">
+        <label for="password">Password</label>
+        <div class="password-meter" data-password-strength="">
+          <div class="password-meter__dot"></div>
+          <div class="password-meter__dot"></div>
+          <div class="password-meter__dot"></div>
+          <div class="password-meter__dot"></div>
+          <div class="password-meter__dot"></div>
+        </div>
+        <input type="password"
+               [(ngModel)]="user.password"
+               name="password"
+               #password="ngModel"
+               placeholder="Type a strong password"
+               required
+               [pattern]= "passwordRegex"
+               validateEqual="confirmPassword"
+               (keyup)="passwordStrengthCalculator()"
+               autocomplete="new-password"
+               maxlength="100"/>
+
+        <div *ngIf="(profile.submitted && password.invalid) || (password.invalid && (password.dirty || password.touched))" class="validation-error">
+          <div *ngIf="password.errors.required">Password is required.</div>
+          <div *ngIf="password.errors.pattern">Password must be at least 8 characters long having at least 1 uppercase, 1 digit and 1 special character.</div>
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password"
+               [(ngModel)]="user.confirmPassword"
+               name="confirmPassword"
+               #confirmPassword="ngModel"
+               validateEqual="password"
+               placeholder="Confirm your password"
+               required
+               autocomplete="new-password"
+               maxlength="100"/>
+
+        <div *ngIf="(profile.submitted && confirmPassword.invalid) || (confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched))" class="validation-error">
+          <div *ngIf="confirmPassword.errors.required">Confirm Password is required.</div>
+          <div *ngIf="confirmPassword.errors.validateEqual === false">Password and Confirm Password must be equal.</div>
+
+        </div>
+      </div>
+
+      <ngx-invisible-recaptcha #profileCaptchaElem
+                               [siteKey]="captcha.siteKey"
+                               (success)="handleSuccess($event)"
+                               [useGlobalDomain]="false"
+                               [theme]="captcha.theme"
+                               [type]="captcha.type"
+                               [badge]="captcha.badge"
+                               [ngModel]="profileCaptchaElem"
+                               [ngModelOptions]="{ standalone: true }">
+      </ngx-invisible-recaptcha>
+
+      <p>By signing up you <a href="#">morbi tristique</a> senectus et <a href="#">netus et malesuada fames ac</a> turpis egestas.</p>
+
+      <button type="submit" class="btn bg-blue">Create Account</button>
+
+    </form>
+  </main>
+</div>
+

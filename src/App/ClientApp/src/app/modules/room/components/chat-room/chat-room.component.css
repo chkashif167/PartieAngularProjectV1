@@ -1,0 +1,23 @@
+
+.user-actions button {
+  margin-right: 10px;
+}
+.chat-message-content {
+  width: 92%;
+}
+
+.chat-input input {
+  width: calc(100% - 2em);
+}
+
+.viewport {
+  height: 700px;
+  overflow-anchor: none;
+  overflow-y: scroll;
+}
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+.validation-error {
+    color: red;
+    margin: 5px 5px;
+    
+    font-size: 12px;
+  }
+  /*.form-control, .tag-selection, .setting-toggle {
+    margin-top: 16px;
+  }*/
+  

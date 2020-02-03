@@ -1,0 +1,36 @@
+<div class="page page-preferences">
+  <partie-header [title]="'Notifications Setting'"
+                 [backUrl]="'/account'"
+                 [showNotification]="'true'">
+  </partie-header>
+
+  <main class="content">
+
+    
+    <ng-container *ngIf="notificationManagerService.notificationSettings$ | async as settings">
+      <div class="preference-item" *ngFor="let setting of settings; trackBy:trackByFn">
+        <div class="notification-setting">
+          <span class="setting-title">{{setting.name}}</span>
+          <span class="setting-description">{{setting.description}}</span>
+          <div class="setting-actions">
+            <button class="btn btn-bare" title="Toggle Email notifications " (click)="toggleEmailSetting(setting)" [ngClass]="setting.emailNotification ? 'enabled' : ''">
+              <img [src]="setting.emailNotification ? '/assets/images/icons/24px/email-green.svg' : '/assets/images/icons/24px/email.svg'"
+                   [ngClass]="setting.emailNotification ? 'icon-enabled' : 'icon-disabled'"
+                   alt="Email Icon">
+
+            </button>
+            <button class="btn btn-bare" title="Toggle Push notifications" (click)="togglePushSetting(setting)" [ngClass]="setting.pushNotification ? 'enabled' : ''">
+              <img [src]="setting.pushNotification ? '/assets/images/icons/24px/mobile-green.svg' : '/assets/images/icons/24px/mobile.svg'"
+                   [ngClass]="setting.pushNotification ? 'icon-enabled' : 'icon-disabled'"
+                   alt="Email Icon">
+
+            </button>
+
+
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+  </main>
+</div>

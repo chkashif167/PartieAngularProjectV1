@@ -1,0 +1,32 @@
+    <div class="modal dynamic-height active" id="DivremoveDialog">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">Dialog Ban User</h2>
+                <button class="btn bg-black btn-close" (click)="closeDialog()">
+                    <img src="/assets/images/icons/misc/close-x.svg" alt="Close Icon">
+                </button>
+            </div>
+          <div class="modal-content">
+            <div style="padding-top: 50px; padding-bottom: 20px;">
+              Select Reason <br>
+              <select style="padding-top: 5px;" [(ngModel)]="this.banReasonId" class="form-control">
+                <option *ngFor="let res of getBanReasons" value={{res.id}}>
+                  {{res.reason}}
+                </option>
+              </select>
+              <small *ngIf="!banReasonId">select reason to ban</small>
+            </div>
+            <div style="padding-bottom: 50px; text-align: center">
+              <button [disabled]="!banReasonId" style="width: 400px;" class="col-lg-12 btn bg-teal submit col-md-10" (click)="banUser();">Ban</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+
+    
+
+
+
+

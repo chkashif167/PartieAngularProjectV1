@@ -1,0 +1,12 @@
+.message-item .btn-bare {
+     height: auto;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    opacity: 0.25;
+    position: relative;
+    right: 0;
+}
+.message-item:first-child {
+margin: 8px 0 0 0;
+}

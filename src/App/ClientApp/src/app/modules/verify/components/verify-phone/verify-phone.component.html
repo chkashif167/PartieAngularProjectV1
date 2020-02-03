@@ -1,0 +1,36 @@
+
+<div class="page page-verify-account">
+  <header>
+    <div class="content">
+      <div class="actions--left">
+        
+      </div>
+      <h1 class="h2 t-center">Account Verification</h1>
+      <div class="actions--right">
+      </div>
+    </div>
+  </header>
+  <main class="content">
+    <div class="message-panel ">
+      <img src="/assets/images/icons/16px/sms.svg" alt="SMS Icon">
+      <p>{{message}}</p>
+    </div>
+    <form name="verify" #verify="ngForm" class="form" (ngSubmit)="verify.form.valid && onSubmit()" novalidate>
+
+      <div class="form-control ">
+        <label for="phone-verification">Verify Your Phone Number</label>
+        <a class="resend" (click)="resendPhoneVerificationCode()">Resend Code</a>
+        <input type="text" [(ngModel)]="code" name="code" minlength="6" maxlength="6" #verificationCode="ngModel" placeholder="Enter the 6-digit code" value="" required />
+        <div *ngIf="(verify.submitted && verificationCode.invalid) || (verificationCode.invalid && (verificationCode.dirty || verificationCode.touched))" class="validation-error">
+          <div *ngIf="verificationCode.errors.required">Verification code is required.</div>
+          <div *ngIf="verificationCode.errors.minlength">Verification code must be 6 characters long.</div>
+        </div>
+        <p class="validation-error">{{errMsg}}</p>
+      </div>
+      <button type="submit" class="btn bg-blue" href="#">
+        Verify Account
+      </button>
+    </form>
+    <p class="contact">Need help? <a href="#">Contact Us</a></p>
+  </main>
+</div>

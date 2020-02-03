@@ -1,0 +1,20 @@
+.del_message_button { float: right; margin: -20px -8% 0 0;}
+.chat-message-content { width: 92%;}
+
+.user-actions button {
+  margin-right: 10px;
+}
+.chat-input input {
+  width: calc(100% - 2em);
+}
+
+.viewport {
+  height: 700px;
+  overflow-anchor: none;
+  overflow-y: scroll;
+}
+
+.item {
+  height: auto;
+}
+

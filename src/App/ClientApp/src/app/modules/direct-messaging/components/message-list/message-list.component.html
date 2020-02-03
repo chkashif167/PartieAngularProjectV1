@@ -1,0 +1,37 @@
+<div class="page page-messages ">
+
+  <partie-header [title]="'Messages'"
+                 [showNotification]="'true'">
+  </partie-header>
+
+  <main class="content">
+    <ng-container *ngIf="messageService.messageThreads$ | async as messageThreads">
+      <div class="person-listing message-item"
+           *ngFor="let thread of messageThreads; trackBy:trackByFn"
+           (click)="navigateToConversation(thread.userId, thread.userName)">
+
+        <div class="avatar">
+          <img src="" [userId]="thread.userId" alt="Avatar Alt Text">
+        </div>
+        <div class="person-name">
+          <span>{{thread.userName}}</span>
+
+        </div>
+        <div class="person-info">
+          <span>{{thread.mostRecentMessage}}</span>
+        </div>
+        <!-- <button (click)="deleteMessageThread()" class="btn btn-bare"><img src="/assets/images/icons/32px/remove.svg" alt="Remove Icon"></button> -->
+
+      </div>
+    </ng-container>
+  </main>
+
+  <button *ngIf="messageService.directMessagingAllowed" class="btn btn-floating-cta" (click)="showFriends()"></button>
+
+  <partie-footer></partie-footer>
+
+
+
+
+
+</div>

@@ -1,0 +1,9 @@
+.partieHhostBy { display: inline-block; margin: 12px 0 0 0; cursor: pointer; color: var(--color-blue-muted); font-size: 14px; font-weight: bold;}
+.partieHhostBy span { font-size: 14px; font-weight: normal;}
+
+.small-text {
+  font-size: 11px;
+  color: #00fa9a;
+  font-weight: normal;
+  margin-left: 5px;
+}

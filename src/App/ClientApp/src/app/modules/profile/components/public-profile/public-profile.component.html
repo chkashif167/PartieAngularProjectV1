@@ -1,0 +1,89 @@
+<div class="page page-profile">
+
+  <partie-header [backUrl]="'/account'"
+                 [showNotification]="'true'"
+                 [contextMenu]="contextMenu"
+                 (menuClick)="contextMenuClicked($event)">
+  </partie-header>
+
+
+  <div class="profile-header">
+    <div class="profile-header-container">
+      <div class="profile-avatar">
+        <svg class="level-indicator" data-percentage="64" viewBox="0 0 192 192">
+          <defs>
+            <radialGradient id="radial-teal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83 96) rotate(90) scale(86)">
+              <stop offset="0.123353" stop-color="#26F2FF" />
+              <stop offset="0.498893" stop-color="#2BC5CF" />
+            </radialGradient>
+
+            <radialGradient id="radial-blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(86)">
+              <stop offset="0.104167" stop-color="#6E4AFF" />
+              <stop offset="0.510417" stop-color="#792DDA" />
+            </radialGradient>
+          </defs>
+
+          <circle class="incomplete" cx="96" cy="96" r="86" stroke="url(#radial-blue)"></circle>
+          <circle class="complete" cx="96" cy="96" r="86" stroke="url(#radial-teal)"></circle>
+        </svg>
+        <img *ngIf="userId" src="" [userId]="userId" [largeSize]="'true'" />
+        <div class="online-indicator"></div>
+      </div>
+
+      <h1 class="h2 profile-name">{{profile?.displayName}}</h1>
+      <div class="profile-meta">
+        <div [ngClass]="role.toLowerCase() === 'staff' ? 'bg-teal' : 'bg-orange'" class="tag staff bg-teal" *ngFor="let role of profile?.roles"><span>{{role}}</span></div>
+        <span class="profile-level">Level {{userLevel}}</span>
+      </div>
+      <div class="profile-actions">
+       
+        <button *ngIf="!profile?.currentUserIsFollowing && !profile?.self" class="btn bg-dark" (click)="follow()"><span class="btn-inner">Follow</span></button>
+        <button *ngIf="profile?.currentUserIsFollowing && !profile?.self" class="btn bg-dark"><span class="btn-inner">Following</span></button>
+        <button *ngIf="showMessageButton" class="btn bg-dark" routerLink="/messages/conversation/{{userId}}">
+          <span class="btn-inner"><img src="/assets/images/icons/24px/chat.svg" alt="Chat Icon"> Message</span>
+        </button>
+
+      </div>
+    </div>
+    <div class="profile-quick-stats">
+      <div class="quick-stat" (click)="showFollowings()">
+        <span class="quick-stat-figure">{{friendshipCounters?.followingsCount}}</span>
+        <span class="quick-stat-label">Following</span>
+      </div>
+      <div class="quick-stat" (click)="showFollowers()">
+        <span class="quick-stat-figure">{{friendshipCounters?.followersCount}}</span>
+        <span class="quick-stat-label">Followers</span>
+      </div>
+      <div class="quick-stat" (click)="showParties()">
+        <span class="quick-stat-figure">{{partieListCount}}</span>
+        <span class="quick-stat-label">Parties</span>
+      </div>
+      <div class="quick-stat" (click)="showBadges()">
+        <span class="quick-stat-figure">{{totalBadges}}</span>
+        <span class="quick-stat-label">Badges</span>
+      </div>
+    </div>
+  </div>
+  
+  <main class="content">
+    <p class="t-body-lg profile-bio" [innerHTML]="profile?.biography || ''"></p>
+    
+    <div class="profile-location">
+      <span class="profile-website"><img *ngIf="profile?.externalLink" src="/assets/images/icons/16px/link-blue-muted.svg" alt="Link Icon"> <a href="{{website}}" target="_blank">{{profile?.externalLink}}</a></span>
+      <span class="profile-city"><img src="/assets/images/icons/16px/location-blue-muted.svg" alt="Location Icon"> <span>{{profile?.country}}</span></span>
+    </div>
+    <div *ngIf="profile?.gamingPlatforms.length > 0" class="gamer-tags">
+      <div *ngFor="let platform of profile?.gamingPlatforms" class="gamer-tag">
+        <img src="/assets/images/icons/16px/steam.svg" alt="Steam Logo">
+        <span>{{platform.gamingPlatform}}</span>
+      </div>
+    </div>
+    <br />
+
+    <partie-bar-chart *ngIf="hasRole('staff')"
+                      [userId]="userId"></partie-bar-chart>
+  </main>
+  <partie-footer></partie-footer>
+
+
+</div>

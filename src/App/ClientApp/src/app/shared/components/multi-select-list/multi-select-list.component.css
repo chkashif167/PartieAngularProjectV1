@@ -1,0 +1,7 @@
+.modal-content {
+    height: 550px;
+    overflow-y: scroll;
+}
+.modal.preference-modal .modal-content {
+    padding-top: 5px;
+}
